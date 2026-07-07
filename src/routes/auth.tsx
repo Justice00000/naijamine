@@ -168,8 +168,13 @@ function AuthPage() {
   );
 }
 
-function Field({ icon: Icon, ...props }: { icon: any } & React.InputHTMLAttributes<HTMLInputElement> & { onChange: (v: string) => void }) {
-  const { onChange, value, ...rest } = props as any;
+function Field({
+  icon: Icon, value, onChange, ...rest
+}: {
+  icon: any;
+  value: string;
+  onChange: (v: string) => void;
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange" | "value">) {
   return (
     <div className="relative">
       <Icon className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
