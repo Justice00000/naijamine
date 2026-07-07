@@ -39,7 +39,7 @@ function SupportPage() {
   const { data: messages = [] } = useQuery({
     queryKey: ["ticket-msgs", selected],
     enabled: !!selected,
-    queryFn: async () => (await supabase.from("ticket_messages").select("*").eq("ticket_id", selected).order("created_at")).data ?? [],
+    queryFn: async () => (await supabase.from("ticket_messages").select("*").eq("ticket_id", selected!).order("created_at")).data ?? [],
   });
 
   const create = useMutation({
