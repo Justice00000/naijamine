@@ -2,6 +2,8 @@ import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowRight, Cpu, ShieldCheck, TrendingUp, Wallet, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { AuroraBackground } from "@/components/AuroraBackground";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -20,8 +22,10 @@ export const Route = createFileRoute("/")({
 
 function Landing() {
   return (
-    <div className="min-h-screen bg-gradient-hero overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-hero overflow-x-hidden relative">
+      <AuroraBackground />
       {/* Nav */}
+
       <header className="glass border-b border-white/40 sticky top-0 z-40">
         <div className="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
