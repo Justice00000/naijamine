@@ -25,6 +25,24 @@ function Dashboard() {
   const qc = useQueryClient();
   const nav = useNavigate();
   const claimFn = useServerFn(claimEarnings);
+  const claimRefFn = useServerFn(claimReferral);
+
+  useEffect(() => {
+    if (!user || typeof window === "undefined") return;
+    const pending = sessionStorage.getItem("nimbus_pending_ref");
+    if (!pending) return;
+    claimRefFn({ data: { code: pending } })
+      .then((res) => {
+        sessionStorage.removeItem("nimbus_pending_ref");
+        if (res?.ok && !res.alreadyLinked) {
+          toast.success("Referral applied", { description: "You joined via a referral link." });
+          qc.invalidateQueries({ queryKey: ["profile", user.id] });
+        }
+      })
+      .catch(() => { sessionStorage.removeItem("nimbus_pending_ref"); });
+  }, [user, claimRefFn, qc]);
+
+
 
   const { data: wallet } = useQuery({
     queryKey: ["wallet", user?.id],
