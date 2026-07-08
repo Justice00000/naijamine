@@ -6,6 +6,8 @@ import { toast } from "sonner";
 import { Loader2, Mail, Lock, User as UserIcon, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
+import { AuroraBackground } from "@/components/AuroraBackground";
+
 
 const searchSchema = z.object({
   mode: z.enum(["signin", "signup", "forgot"]).optional(),
@@ -94,8 +96,10 @@ function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-hero flex flex-col">
+    <div className="min-h-screen bg-gradient-hero flex flex-col relative">
+      <AuroraBackground />
       <header className="p-4">
+
         <Link to="/" className="inline-flex items-center gap-2">
           <div className="w-8 h-8 rounded-xl bg-gradient-primary shadow-glow flex items-center justify-center text-primary-foreground text-sm font-bold">N</div>
           <span className="font-display font-bold text-lg">Nimbus</span>
