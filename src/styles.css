@@ -245,3 +245,106 @@
   background-size: 200% 100%;
   animation: shimmer 1.6s linear infinite;
 }
+
+/* ==========================================================================
+   AURORA BACKGROUND — animated blobs, mouse-follow glow, subtle grid
+   ========================================================================== */
+@keyframes aurora-drift-1 {
+  0%,100% { transform: translate(-10%, -10%) scale(1); }
+  33%     { transform: translate(20%, 10%) scale(1.15); }
+  66%     { transform: translate(-5%, 25%) scale(0.95); }
+}
+@keyframes aurora-drift-2 {
+  0%,100% { transform: translate(30%, 20%) scale(1); }
+  50%     { transform: translate(-15%, -10%) scale(1.2); }
+}
+@keyframes aurora-drift-3 {
+  0%,100% { transform: translate(10%, 60%) scale(1.05); }
+  50%     { transform: translate(40%, 20%) scale(0.9); }
+}
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.7;
+  mix-blend-mode: multiply;
+  will-change: transform;
+}
+.aurora-1 {
+  top: -10%; left: -10%;
+  width: 55vmax; height: 55vmax;
+  background: radial-gradient(circle, oklch(0.85 0.16 300 / 0.7), transparent 65%);
+  animation: aurora-drift-1 22s ease-in-out infinite;
+}
+.aurora-2 {
+  top: -5%; right: -20%;
+  width: 50vmax; height: 50vmax;
+  background: radial-gradient(circle, oklch(0.88 0.13 190 / 0.65), transparent 65%);
+  animation: aurora-drift-2 26s ease-in-out infinite;
+}
+.aurora-3 {
+  bottom: -20%; left: 20%;
+  width: 45vmax; height: 45vmax;
+  background: radial-gradient(circle, oklch(0.9 0.12 55 / 0.6), transparent 65%);
+  animation: aurora-drift-3 30s ease-in-out infinite;
+}
+
+.mouse-glow {
+  position: absolute;
+  inset: 0;
+  --mx: 50%;
+  --my: 50%;
+  background: radial-gradient(
+    600px circle at var(--mx) var(--my),
+    oklch(0.85 0.15 300 / 0.18),
+    transparent 60%
+  );
+  transition: background 0.15s ease-out;
+}
+
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, oklch(0.5 0.15 285 / 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(0.5 0.15 285 / 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 80%);
+}
+
+/* Animated glowing border for premium cards */
+@keyframes border-glow {
+  0%,100% { background-position: 0% 50%; }
+  50%     { background-position: 100% 50%; }
+}
+@utility glow-border {
+  position: relative;
+  background: var(--card);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(120deg,
+      oklch(0.78 0.16 300),
+      oklch(0.82 0.14 190),
+      oklch(0.86 0.14 55),
+      oklch(0.78 0.16 300));
+    background-size: 300% 300%;
+    animation: border-glow 8s ease infinite;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-blob, .animate-shimmer, .animate-float, .animate-pulse-glow, .animate-spin-slow { animation: none !important; }
+}
+

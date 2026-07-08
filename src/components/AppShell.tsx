@@ -6,6 +6,8 @@ import type { ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import { AuroraBackground } from "@/components/AuroraBackground";
+
 
 interface Props {
   children: ReactNode;
@@ -46,8 +48,10 @@ export function AppShell({ children }: Props) {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-hero pb-24">
+    <div className="min-h-screen bg-gradient-hero pb-24 relative">
+      <AuroraBackground />
       {/* Top bar */}
+
       <header className="sticky top-0 z-40 glass border-b border-white/40">
         <div className="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between">
           <Link to="/dashboard" className="flex items-center gap-2 group">
@@ -147,8 +151,10 @@ export function AdminLayout({ children }: Props) {
     { to: "/admin/plans", label: "Plans", icon: Pickaxe },
   ] as const;
   return (
-    <div className="min-h-screen bg-gradient-hero">
+    <div className="min-h-screen bg-gradient-hero relative">
+      <AuroraBackground />
       <header className="glass border-b border-white/40 sticky top-0 z-40">
+
         <div className="mx-auto max-w-7xl px-4 h-14 flex items-center justify-between">
           <Link to="/admin" className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-xl bg-gradient-gold shadow-soft flex items-center justify-center text-gold-foreground text-sm font-bold">A</div>
