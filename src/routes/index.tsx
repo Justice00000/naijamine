@@ -10,8 +10,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Buy hash-rate contracts, track earnings in real time, and withdraw to any wallet. Nimbus is a premium cloud crypto mining platform for everyone." },
     ],
   }),
+  ssr: false,
   beforeLoad: async () => {
-    if (typeof window === "undefined") return;
     const { data } = await supabase.auth.getSession();
     if (data.session) throw redirect({ to: "/dashboard" });
   },
