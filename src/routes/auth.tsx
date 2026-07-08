@@ -34,10 +34,15 @@ function AuthPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // Persist referral code so it survives Google OAuth redirect and can be claimed post-signup
+    if (ref && typeof window !== "undefined") {
+      try { sessionStorage.setItem("nimbus_pending_ref", ref); } catch {}
+    }
     supabase.auth.getSession().then(({ data }) => {
       if (data.session) nav({ to: "/dashboard" });
     });
-  }, [nav]);
+  }, [nav, ref]);
+
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
