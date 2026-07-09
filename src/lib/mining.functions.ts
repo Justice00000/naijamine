@@ -276,7 +276,7 @@ export const adminApproveDeposit = createServerFn({ method: "POST" })
       type: "deposit",
       status: "completed",
       amount: data.usdValue,
-      currency: dep.currency,
+      currency: dep.currency ?? "USD",
       description: `Deposit approved (${dep.currency})`,
       reference_id: dep.id,
     });
