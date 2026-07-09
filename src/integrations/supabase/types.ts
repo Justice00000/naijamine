@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      bank_accounts: {
+        Row: {
+          account_name: string
+          account_number: string
+          bank_name: string
+          created_at: string
+          currency: string
+          id: string
+          instructions: string | null
+          is_active: boolean
+        }
+        Insert: {
+          account_name: string
+          account_number: string
+          bank_name: string
+          created_at?: string
+          currency?: string
+          id?: string
+          instructions?: string | null
+          is_active?: boolean
+        }
+        Update: {
+          account_name?: string
+          account_number?: string
+          bank_name?: string
+          created_at?: string
+          currency?: string
+          id?: string
+          instructions?: string | null
+          is_active?: boolean
+        }
+        Relationships: []
+      }
       crypto_prices: {
         Row: {
           change_24h: number
@@ -73,43 +106,93 @@ export type Database = {
       }
       deposits: {
         Row: {
-          amount: number
+          amount: number | null
+          bank_account_id: string | null
           created_at: string
-          currency: string
+          currency: string | null
+          fx_rate: number | null
           id: string
+          method: string
           network: string | null
+          ngn_amount: number | null
+          platform_fee_usd: number | null
           processed_at: string | null
+          proof_url: string | null
+          sender_name: string | null
           status: Database["public"]["Enums"]["tx_status"]
           tx_hash: string | null
           usd_value: number | null
           user_id: string
-          wallet_address: string
+          wallet_address: string | null
         }
         Insert: {
-          amount: number
+          amount?: number | null
+          bank_account_id?: string | null
           created_at?: string
-          currency: string
+          currency?: string | null
+          fx_rate?: number | null
           id?: string
+          method?: string
           network?: string | null
+          ngn_amount?: number | null
+          platform_fee_usd?: number | null
           processed_at?: string | null
+          proof_url?: string | null
+          sender_name?: string | null
           status?: Database["public"]["Enums"]["tx_status"]
           tx_hash?: string | null
           usd_value?: number | null
           user_id: string
-          wallet_address: string
+          wallet_address?: string | null
         }
         Update: {
-          amount?: number
+          amount?: number | null
+          bank_account_id?: string | null
           created_at?: string
-          currency?: string
+          currency?: string | null
+          fx_rate?: number | null
           id?: string
+          method?: string
           network?: string | null
+          ngn_amount?: number | null
+          platform_fee_usd?: number | null
           processed_at?: string | null
+          proof_url?: string | null
+          sender_name?: string | null
           status?: Database["public"]["Enums"]["tx_status"]
           tx_hash?: string | null
           usd_value?: number | null
           user_id?: string
-          wallet_address?: string
+          wallet_address?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deposits_bank_account_id_fkey"
+            columns: ["bank_account_id"]
+            isOneToOne: false
+            referencedRelation: "bank_accounts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      fx_rates: {
+        Row: {
+          currency: string
+          rate_per_usd: number
+          source: string | null
+          updated_at: string
+        }
+        Insert: {
+          currency: string
+          rate_per_usd: number
+          source?: string | null
+          updated_at?: string
+        }
+        Update: {
+          currency?: string
+          rate_per_usd?: number
+          source?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
@@ -319,6 +402,54 @@ export type Database = {
           is_read?: boolean
           title?: string
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      platform_revenue: {
+        Row: {
+          amount_usd: number
+          created_at: string
+          id: string
+          metadata: Json | null
+          reference_id: string | null
+          source: string
+          user_id: string | null
+        }
+        Insert: {
+          amount_usd: number
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          reference_id?: string | null
+          source: string
+          user_id?: string | null
+        }
+        Update: {
+          amount_usd?: number
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          reference_id?: string | null
+          source?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      platform_settings: {
+        Row: {
+          key: string
+          updated_at: string
+          value: Json
+        }
+        Insert: {
+          key: string
+          updated_at?: string
+          value: Json
+        }
+        Update: {
+          key?: string
+          updated_at?: string
+          value?: Json
         }
         Relationships: []
       }
@@ -601,41 +732,62 @@ export type Database = {
         Row: {
           admin_notes: string | null
           amount: number
+          bank_account_name: string | null
+          bank_account_number: string | null
+          bank_name: string | null
           created_at: string
-          currency: string
+          currency: string | null
           fee: number
+          fx_rate: number | null
           id: string
+          method: string
           network: string | null
+          ngn_amount: number | null
+          platform_fee_usd: number | null
           processed_at: string | null
           status: Database["public"]["Enums"]["tx_status"]
           user_id: string
-          wallet_address: string
+          wallet_address: string | null
         }
         Insert: {
           admin_notes?: string | null
           amount: number
+          bank_account_name?: string | null
+          bank_account_number?: string | null
+          bank_name?: string | null
           created_at?: string
-          currency: string
+          currency?: string | null
           fee?: number
+          fx_rate?: number | null
           id?: string
+          method?: string
           network?: string | null
+          ngn_amount?: number | null
+          platform_fee_usd?: number | null
           processed_at?: string | null
           status?: Database["public"]["Enums"]["tx_status"]
           user_id: string
-          wallet_address: string
+          wallet_address?: string | null
         }
         Update: {
           admin_notes?: string | null
           amount?: number
+          bank_account_name?: string | null
+          bank_account_number?: string | null
+          bank_name?: string | null
           created_at?: string
-          currency?: string
+          currency?: string | null
           fee?: number
+          fx_rate?: number | null
           id?: string
+          method?: string
           network?: string | null
+          ngn_amount?: number | null
+          platform_fee_usd?: number | null
           processed_at?: string | null
           status?: Database["public"]["Enums"]["tx_status"]
           user_id?: string
-          wallet_address?: string
+          wallet_address?: string | null
         }
         Relationships: []
       }
