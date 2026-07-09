@@ -127,9 +127,10 @@ function Dashboard() {
   return (
     <AppShell>
       <PageHeader
-        title={`Hi, ${profile?.full_name?.split(" ")[0] ?? "miner"} 👋`}
+        title={`Hi, ${(profile?.full_name ?? (user?.user_metadata as any)?.full_name ?? (user?.user_metadata as any)?.name ?? user?.email?.split("@")[0] ?? "there")?.split(" ")[0]} 👋`}
         subtitle="Your cloud rigs are humming."
       />
+
 
       {/* Balance Hero */}
       <motion.div
