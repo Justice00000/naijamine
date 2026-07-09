@@ -99,6 +99,15 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
   useEffect(() => {
+    // Capture referral code from ANY entry URL and persist across OAuth redirects
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const ref = params.get("ref");
+      if (ref && ref.trim()) {
+        sessionStorage.setItem("nimbus_pending_ref", ref.trim());
+      }
+    } catch {}
+
     let unsub: (() => void) | undefined;
     let mounted = true;
     import("@/integrations/supabase/client").then(({ supabase }) => {
@@ -115,6 +124,7 @@ function RootComponent() {
       unsub?.();
     };
   }, [router, queryClient]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />

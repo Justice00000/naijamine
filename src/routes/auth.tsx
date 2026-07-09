@@ -37,13 +37,18 @@ function AuthPage() {
 
   useEffect(() => {
     // Persist referral code so it survives Google OAuth redirect and can be claimed post-signup
-    if (ref && typeof window !== "undefined") {
-      try { sessionStorage.setItem("nimbus_pending_ref", ref); } catch {}
+    if (typeof window !== "undefined") {
+      try {
+        if (ref) sessionStorage.setItem("nimbus_pending_ref", ref);
+        const stored = sessionStorage.getItem("nimbus_pending_ref");
+        if (stored && !refCode) setRefCode(stored);
+      } catch {}
     }
     supabase.auth.getSession().then(({ data }) => {
       if (data.session) nav({ to: "/dashboard" });
     });
-  }, [nav, ref]);
+  }, [nav, ref, refCode]);
+
 
 
   async function handleSubmit(e: React.FormEvent) {
