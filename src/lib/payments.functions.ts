@@ -4,8 +4,12 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 const FX_TTL_MS = 60 * 60 * 1000; // 1 hour
 
-async function loadSettings(supabase: any) {
-  const { data } = await supabase.from("platform_settings").select("*");
+async function loadSettings(_supabase?: any) {
+  // Platform settings are admin-only via RLS; load through the service-role
+  // client so server functions can always read fee/spread config regardless
+  // of the caller's role.
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { data } = await supabaseAdmin.from("platform_settings").select("*");
   const map: Record<string, number> = {};
   for (const row of data ?? []) {
     const v = typeof row.value === "number" ? row.value : Number(row.value);
