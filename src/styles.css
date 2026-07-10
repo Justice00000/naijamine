@@ -263,41 +263,53 @@
   50%     { transform: translate(40%, 20%) scale(0.9); }
 }
 
+.aurora-parallax {
+  position: absolute;
+  inset: -8%;
+  transform: translate3d(var(--px, 0px), var(--py, 0px), 0);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
 .aurora-blob {
   position: absolute;
   border-radius: 9999px;
   filter: blur(80px);
-  opacity: 0.7;
+  opacity: 0.72;
   mix-blend-mode: multiply;
   will-change: transform;
 }
 .aurora-1 {
   top: -10%; left: -10%;
   width: 55vmax; height: 55vmax;
-  background: radial-gradient(circle, oklch(0.85 0.16 300 / 0.7), transparent 65%);
+  background: radial-gradient(circle, oklch(0.85 0.16 300 / 0.75), transparent 65%);
   animation: aurora-drift-1 22s ease-in-out infinite;
 }
 .aurora-2 {
   top: -5%; right: -20%;
   width: 50vmax; height: 50vmax;
-  background: radial-gradient(circle, oklch(0.88 0.13 190 / 0.65), transparent 65%);
+  background: radial-gradient(circle, oklch(0.88 0.13 190 / 0.7), transparent 65%);
   animation: aurora-drift-2 26s ease-in-out infinite;
 }
 .aurora-3 {
   bottom: -20%; left: 20%;
   width: 45vmax; height: 45vmax;
-  background: radial-gradient(circle, oklch(0.9 0.12 55 / 0.6), transparent 65%);
+  background: radial-gradient(circle, oklch(0.9 0.12 55 / 0.65), transparent 65%);
   animation: aurora-drift-3 30s ease-in-out infinite;
+}
+.aurora-4 {
+  bottom: -25%; right: 5%;
+  width: 40vmax; height: 40vmax;
+  background: radial-gradient(circle, oklch(0.86 0.14 340 / 0.55), transparent 65%);
+  animation: aurora-drift-2 34s ease-in-out infinite reverse;
 }
 
 .mouse-glow {
   position: absolute;
   inset: 0;
-  --mx: 50%;
-  --my: 50%;
   background: radial-gradient(
-    600px circle at var(--mx) var(--my),
-    oklch(0.85 0.15 300 / 0.18),
+    620px circle at var(--mx, 50%) var(--my, 50%),
+    oklch(0.85 0.15 300 / 0.22),
     transparent 60%
   );
   transition: background 0.15s ease-out;
@@ -307,11 +319,20 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(to right, oklch(0.5 0.15 285 / 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, oklch(0.5 0.15 285 / 0.04) 1px, transparent 1px);
+    linear-gradient(to right, oklch(0.5 0.15 285 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(0.5 0.15 285 / 0.045) 1px, transparent 1px);
   background-size: 48px 48px;
   mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 80%);
   -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 80%);
+}
+
+.noise-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 220px 220px;
 }
 
 /* Animated glowing border for premium cards */
