@@ -642,7 +642,7 @@ function QuickAction({ icon: Icon, label, desc, tint, onClick }: any) {
       className="glass rounded-2xl p-3 text-left"
     >
       <div className={`w-9 h-9 rounded-xl flex items-center justify-center shadow-soft ${tintCls[tint]}`}>
-        <Icon className="w-4.5 h-4.5" />
+        <Icon className="w-[18px] h-[18px]" />
       </div>
       <div className="mt-2 font-semibold text-sm">{label}</div>
       <div className="text-[11px] text-muted-foreground">{desc}</div>
