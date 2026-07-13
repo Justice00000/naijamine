@@ -1,5 +1,5 @@
 import { Link, useLocation, useRouter } from "@tanstack/react-router";
-import { Home, Pickaxe, Wallet, Users, User, Bell, ShieldCheck, LayoutDashboard } from "lucide-react";
+import { Home, Pickaxe, Wallet, Users, User, Bell, ShieldCheck, LayoutDashboard, Sliders } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
@@ -149,6 +149,7 @@ export function AdminLayout({ children }: Props) {
     { to: "/admin/withdrawals", label: "Withdrawals", icon: Wallet },
     { to: "/admin/kyc", label: "KYC", icon: ShieldCheck },
     { to: "/admin/plans", label: "Plans", icon: Pickaxe },
+    { to: "/admin/settings", label: "Settings", icon: Sliders },
   ] as const;
   return (
     <div className="min-h-screen bg-gradient-hero relative">
